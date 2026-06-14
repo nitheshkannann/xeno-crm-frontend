@@ -74,6 +74,14 @@ export function CampaignsPage() {
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['campaigns'] }); setShowCreate(false); resetForm(); },
   });
 
+  const cancelMutation = useMutation({
+    mutationFn: (id: string) => api.post(`/campaigns/${id}/cancel`, {}),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
+      queryClient.invalidateQueries({ queryKey: ['campaign', selectedCampaign] });
+    },
+  });
+
   const resetForm = () => { setStep(1); setSelectedSegment(''); setChannel('EMAIL'); setName(''); setObjective(''); setVariants([]); };
 
   const generateVariants = async () => {
@@ -204,9 +212,24 @@ export function CampaignsPage() {
               <div className="flex items-start justify-between mb-3">
                 <div className="min-w-0">
                   <h3 className="font-semibold text-sm text-gray-900 truncate">{campaignDetail.name}</h3>
-                  <span className={`${getCampaignStatusClass(campaignDetail.status)} mt-1 inline-block`}>
-                    {campaignDetail.status}
-                  </span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className={`${getCampaignStatusClass(campaignDetail.status)} inline-block`}>
+                      {campaignDetail.status}
+                    </span>
+                    {campaignDetail.status === 'RUNNING' && (
+                      <button
+                        onClick={() => {
+                          if (confirm('Are you sure you want to cancel this campaign? Any unsent emails will be stopped.')) {
+                            cancelMutation.mutate(campaignDetail.id);
+                          }
+                        }}
+                        disabled={cancelMutation.isPending}
+                        className="text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 px-2 py-0.5 rounded transition-colors"
+                      >
+                        {cancelMutation.isPending ? 'Cancelling...' : 'Cancel'}
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <button
                   onClick={() => setSelectedCampaign(null)}

@@ -117,7 +117,8 @@ export function AIAgentPage() {
     setApproved(false);
 
     const encodedGoal = encodeURIComponent(goal);
-    const url = `/api/ai/run-agent?goal=${encodedGoal}`;
+    const baseUrl = import.meta.env.VITE_API_URL || '';
+    const url = `${baseUrl}/api/ai/run-agent?goal=${encodedGoal}`;
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 

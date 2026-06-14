@@ -44,7 +44,8 @@ export function IntelligencePage() {
         parts: [{ text: m.content }],
       }));
 
-      const res = await fetch('/api/ai/chat', {
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${baseUrl}/api/ai/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

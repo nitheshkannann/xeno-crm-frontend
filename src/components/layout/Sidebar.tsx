@@ -82,16 +82,49 @@ export function Sidebar() {
       style={{
         width: '62px',
         minWidth: '62px',
-        background: 'hsl(var(--sidebar-bg))',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+        background: 'rgba(15, 23, 42, 0.35)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
       }}
     >
       {/* Logo mark */}
       <div
-        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mb-3"
-        style={{ background: 'linear-gradient(135deg, #00C9B1, #3b82f6)' }}
+        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mb-3 hover:scale-105 transition-transform duration-200"
+        style={{
+          background: 'rgba(255, 255, 255, 0.05)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: '0 4px 15px rgba(0, 245, 212, 0.15)'
+        }}
       >
-        <Zap className="w-4 h-4 text-white" />
+        <svg className="w-6 h-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logo-g1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#00F5D4" />
+              <stop offset="100%" stopColor="#3B82F6" />
+            </linearGradient>
+            <linearGradient id="logo-g2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#8B5CF6" />
+              <stop offset="100%" stopColor="#EC4899" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M25 25 L48 50 L25 75"
+            stroke="url(#logo-g1)"
+            strokeWidth="14"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M75 25 L52 50 L75 75"
+            stroke="url(#logo-g2)"
+            strokeWidth="14"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx="50" cy="50" r="8" fill="#FFFFFF" />
+        </svg>
       </div>
 
       {/* Main nav */}

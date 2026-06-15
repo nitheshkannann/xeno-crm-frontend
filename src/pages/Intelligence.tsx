@@ -87,7 +87,7 @@ export function IntelligencePage() {
   return (
     <div className="max-w-4xl mx-auto h-[calc(100vh-8rem)] flex flex-col bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 p-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-white">
+      <div className="flex items-center gap-3 p-5 border-b border-white/5 bg-white/5">
         <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
           <Sparkles className="w-5 h-5" />
         </div>

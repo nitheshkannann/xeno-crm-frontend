@@ -30,7 +30,7 @@ function StatCard({
           </span>
         )}
       </div>
-      <p className="text-2xl font-bold text-gray-900 tabular-nums">{value}</p>
+      <p className="text-2xl font-bold text-white tabular-nums">{value}</p>
       <p className="text-sm text-gray-500 mt-0.5">{label}</p>
       {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
     </div>
@@ -172,7 +172,7 @@ export function DashboardPage() {
         {/* Message Performance Chart */}
         <div className="col-span-2 card p-5">
           <div className="mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">Message Performance</h3>
+            <h3 className="text-sm font-semibold text-white">Message Performance</h3>
             <p className="text-xs text-gray-500 mt-0.5">Sent vs Opened vs Converted — last 14 days</p>
           </div>
           {/* Explicit pixel height wrapper — required for Recharts ResponsiveContainer */}
@@ -205,7 +205,7 @@ export function DashboardPage() {
             )}
           </div>
           {/* Legend */}
-          <div className="flex items-center gap-5 mt-3 pt-3 border-t border-gray-100">
+          <div className="flex items-center gap-5 mt-3 pt-3 border-t border-gray-150">
             {[
               { color: '#6366f1', label: 'Sent' },
               { color: '#10b981', label: 'Opened' },
@@ -222,7 +222,7 @@ export function DashboardPage() {
         {/* Customer Health */}
         <div className="card p-5">
           <div className="mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">Customer Health</h3>
+            <h3 className="text-sm font-semibold text-white">Customer Health</h3>
             <p className="text-xs text-gray-500 mt-0.5">RFM + engagement scores</p>
           </div>
           <div className="space-y-4">

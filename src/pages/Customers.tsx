@@ -191,29 +191,32 @@ export function CustomersPage() {
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                  <div 
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                    style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)' }}
+                  >
                     {selected.firstName[0]}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-semibold text-gray-900 text-sm truncate">
+                    <h3 className="font-semibold text-white text-sm truncate">
                       {selected.firstName} {selected.lastName}
                     </h3>
-                    <p className="text-xs text-gray-500 truncate">{selected.email}</p>
+                    <p className="text-xs text-gray-400 truncate">{selected.email}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => { setEditingCustomer(selected); setIsModalOpen(true); }}
-                  className="text-xs text-blue-600 hover:text-blue-700 font-medium flex-shrink-0"
+                  className="text-xs text-blue-400 hover:text-blue-300 font-medium flex-shrink-0"
                 >
                   Edit
                 </button>
               </div>
 
               {/* Health score */}
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg mb-4">
+              <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg mb-4">
                 <HealthScoreRing score={selected.healthScore} />
                 <div>
-                  <p className="text-sm font-bold text-gray-900">{selected.healthScore}/100</p>
+                  <p className="text-sm font-bold text-white">{selected.healthScore}/100</p>
                   <span className={getHealthLabelClass(selected.healthLabel)}>
                     {getHealthLabelText(selected.healthLabel)}
                   </span>
@@ -223,38 +226,48 @@ export function CustomersPage() {
               {/* Stats grid */}
               <div className="grid grid-cols-2 gap-2 mb-4">
                 {[
-                  { label: 'Total Spend', value: formatCurrency(selected.totalSpend) },
-                  { label: 'Orders', value: String(selected.orderCount) },
-                  { label: 'Avg Order', value: formatCurrency(selected.avgOrderValue) },
-                  { label: 'Days Inactive', value: selected.daysSinceLastOrder ? `${selected.daysSinceLastOrder}d` : '—' },
-                  { label: 'Open Rate', value: formatPercent(selected.emailOpenRate) },
-                  { label: 'Click Rate', value: formatPercent(selected.emailClickRate) },
+                  { label: 'Total Spend', value: formatCurrency(selected.totalSpend), colorClass: 'text-green-400' },
+                  { label: 'Orders', value: String(selected.orderCount), colorClass: 'text-violet-400' },
+                  { label: 'Avg Order', value: formatCurrency(selected.avgOrderValue), colorClass: 'text-green-400' },
+                  { label: 'Days Inactive', value: selected.daysSinceLastOrder ? `${selected.daysSinceLastOrder}d` : '—', colorClass: 'text-orange-400' },
+                  { label: 'Open Rate', value: formatPercent(selected.emailOpenRate), colorClass: 'text-blue-400' },
+                  { label: 'Click Rate', value: formatPercent(selected.emailClickRate), colorClass: 'text-blue-400' },
                 ].map(stat => (
-                  <div key={stat.label} className="bg-gray-50 rounded-md p-2.5">
+                  <div key={stat.label} className="bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 rounded-lg p-2.5 transition-all duration-200">
                     <p className="text-[11px] text-gray-400 mb-0.5">{stat.label}</p>
-                    <p className="text-sm font-semibold text-gray-900">{stat.value}</p>
+                    <p className={`text-sm font-semibold ${stat.colorClass}`}>{stat.value}</p>
                   </div>
                 ))}
               </div>
 
               {/* Preferred category */}
               {selected.preferredCategory && (
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-4 p-2 bg-white/5 border border-white/5 rounded-lg">
                   <Tag className="w-3.5 h-3.5 text-gray-400" />
-                  <span className="text-xs text-gray-500">
-                    Prefers <span className="font-medium text-gray-700">{selected.preferredCategory}</span>
+                  <span className="text-xs text-gray-400">
+                    Prefers <span className="font-semibold text-white">{selected.preferredCategory}</span>
                   </span>
                 </div>
               )}
 
               {/* Tags */}
               {selected.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {selected.tags.map(tag => (
-                    <span key={tag} className="text-xs bg-gray-100 border border-gray-200 text-gray-500 px-2 py-0.5 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {selected.tags.map(tag => {
+                    const isNew = tag.toLowerCase() === 'new';
+                    const bgStyle = isNew ? 'rgba(20, 184, 166, 0.12)' : 'rgba(99, 102, 241, 0.12)';
+                    const textCol = isNew ? '#2dd4bf' : '#818cf8';
+                    const borderCol = isNew ? 'rgba(20, 184, 166, 0.2)' : 'rgba(99, 102, 241, 0.2)';
+                    return (
+                      <span 
+                        key={tag} 
+                        className="text-xs px-2.5 py-0.5 rounded-full font-medium border"
+                        style={{ backgroundColor: bgStyle, color: textCol, borderColor: borderCol }}
+                      >
+                        {tag}
+                      </span>
+                    );
+                  })}
                 </div>
               )}
             </div>

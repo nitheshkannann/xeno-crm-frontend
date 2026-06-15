@@ -87,6 +87,7 @@ export function SegmentsPage() {
   const [aiLoading, setAiLoading] = useState(false);
   const [preview, setPreview] = useState<SegmentPreview | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   const { data: segments, isLoading } = useQuery({
     queryKey: ['segments'],
@@ -109,7 +110,7 @@ export function SegmentsPage() {
   });
 
   const resetForm = () => {
-    setName(''); setDescription(''); setFilterRules({ logic: 'AND', rules: [] }); setPreview(null); setAiPrompt('');
+    setName(''); setDescription(''); setFilterRules({ logic: 'AND', rules: [] }); setPreview(null); setAiPrompt(''); setAiError(null);
   };
 
   const addRule = () => {
@@ -145,12 +146,15 @@ export function SegmentsPage() {
   const runAIBuilder = async () => {
     if (!aiPrompt) return;
     setAiLoading(true);
+    setAiError(null);
     try {
       const res = await api.post<ApiResponse<{ filterRules: FilterGroup; segmentName: string; segmentDescription: string; explanation: string; previewCount: number; sample?: SegmentPreview['sample'] }>>('/ai/build-segment', { prompt: aiPrompt });
       setFilterRules(res.data.filterRules);
       setName(res.data.segmentName);
       setDescription(res.data.segmentDescription);
       setPreview({ count: res.data.previewCount, sample: (res.data.sample ?? []) as SegmentPreview['sample'] });
+    } catch (err: any) {
+      setAiError(err.message || 'Failed to build segment with AI.');
     } finally {
       setAiLoading(false);
     }
@@ -293,6 +297,11 @@ export function SegmentsPage() {
                         {aiLoading ? 'Building…' : 'Build with AI'}
                       </button>
                     </div>
+                    {aiError && (
+                      <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded-md border border-red-100">
+                        {aiError}
+                      </div>
+                    )}
                   </div>
 
                   {/* Name & Description */}
